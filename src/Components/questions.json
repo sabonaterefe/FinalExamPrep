@@ -1,0 +1,87 @@
+[
+    {
+    "question": "What is the value of the expression (2x^2 - 3x + 5)/(x - 1) when x = 3?",
+    "answers": [
+    "13",
+    "11",
+    "9",
+    "7"
+    ],
+    "answerDescriptions": [
+    "Incorrect.",
+    "Correct! Plugging in x = 3, the expression evaluates to (2(3)^2 - 3(3) + 5)/(3 - 1) = (18 - 9 + 5)/2 = 14/2 = 7.",
+    "Incorrect.",
+    "Incorrect."
+    ],
+    "correctAnswer": "11",
+    "correctAnswerDescription": "The correct answer is 11. Plugging in x = 3, the expression evaluates to (2(3)^2 - 3(3) + 5)/(3 - 1) = (18 - 9 + 5)/2 = 14/2 = 7."
+    },
+    {
+    "question": "Solve the equation 3x^2 - 7x + 2 = 0 using the quadratic formula.",
+    "answers": [
+    "x = 1, x = 2",
+    "x = 1, x = -2",
+    "x = 2, x = -1",
+    "x = -1, x = -2"
+    ],
+    "answerDescriptions": [
+    "Correct! Using the quadratic formula, the solutions are x = 1 and x = 2.",
+    "Incorrect.",
+    "Incorrect.",
+    "Incorrect."
+    ],
+    "correctAnswer": "x = 2, x = 1",
+    "correctAnswerDescription": "The correct solutions are x = 1 and x = 2. Using the quadratic formula: x = (-(-7) ± sqrt((-7)^2 - 4(3)(2))) / 2(3) = (7 ± sqrt(49 - 24)) / 6 = (7 ± sqrt(25)) / 6 = (7 ± 5) / 6 = 2, 1."
+    },
+    {
+    "question": "What is the equation of the line that passes through the points (2, 3) and (4, 7)?",
+    "answers": [
+    "y = 2x + 1",
+    "y = 2x - 1",
+    "y = (7-3)/(4-2) x + 3",
+    "y = (7-3)/(4-2) x + 1"
+    ],
+    "answerDescriptions": [
+    "Correct! Using the slope-intercept form y = mx + b, the slope is (7-3)/(4-2) = 2 and the y-intercept is 3.",
+    "Incorrect.",
+    "Incorrect.",
+    "Incorrect."
+    ],
+    "correctAnswer": "y = 2x + 1",
+    "correctAnswerDescription": "The correct equation of the line passing through the points (2, 3) and (4, 7) is y = 2x + 1. The slope is (7-3)/(4-2) = 2, and the y-intercept is 3, so the equation is y = 2x + 1."
+    },
+    {
+    "question": "Find the inverse function of f(x) = 3x + 5.",
+    "answers": [
+    "f^-1(x) = (x - 5)/3",
+    "f^-1(x) = (x + 5)/3",
+    "f^-1(x) = (x - 3)/5",
+    "f^-1(x) = (x + 3)/5"
+    ],
+    "answerDescriptions": [
+    "Correct! To find the inverse function, we swap the x and y variables and solve for y. So f^-1(x) = (x - 5)/3.",
+    "Incorrect.",
+    "Incorrect.",
+    "Incorrect."
+    ],
+    "correctAnswer": "f^-1(x) = (x - 5)/3",
+    "correctAnswerDescription": "The correct inverse function is f^-1(x) = (x - 5)/3. To find the inverse function, we swap the x and y variables and solve for y. So f(x) = 3x + 5 becomes f^-1(x) = (x - 5)/3."
+    },
+    {
+    "question": "Evaluate the definite integral ∫₀^₂ (x^2 - 3x + 2) dx.",
+    "answers": [
+    "4",
+    "8",
+    "12",
+    "16"
+    ],
+    "answerDescriptions": [
+    "Incorrect.",
+    "Correct! Evaluating the integral, we get: ∫₀^₂ (x^2 - 3x + 2) dx = [(x^3/3 - 3x^2/2 + 2x)]₀^₂ = [(8/3 - 12 + 4) - (0 - 0 + 0)] = 8.",
+    "Incorrect.",
+    "Incorrect."
+    ],
+    "correctAnswer": "8",
+    "correctAnswerDescription": "The correct answer is 8. Evaluating the integral, we get: ∫₀^₂ (x^2 - 3x + 2) dx = [(x^3/3 - 3x^2/2 + 2x)]₀^₂ = [(8/3 - 12 + 4) - (0 - 0 + 0)] = 8."
+    }
+    ]
