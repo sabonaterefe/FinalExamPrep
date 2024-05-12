@@ -67,9 +67,7 @@ function TrackProgress() {
   };
 
   const handleYearSelect = (year) => {
-    // Implement logic to handle year selection
     console.log(`Selected Year: ${year}`);
-    // Example of updating progress
     setProgress(50);
   };
 

@@ -122,7 +122,7 @@ const HomePage = () => {
                   <Typography variant="body1" mb={2}>
                     Test your knowledge with interactive quizzes designed for exam preparation.
                   </Typography>
-                  <Button variant="contained" color="primary" onClick={() => navigateToComponent('/forum')}>
+                  <Button variant="contained" color="primary" onClick={() => navigateToComponent('/quiz')}>
                     Take a Quiz
                   </Button>
                 </CardContent>
