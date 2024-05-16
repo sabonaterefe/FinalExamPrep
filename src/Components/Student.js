@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Container, TextField, Button, Typography, Grid, Paper, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
-import './Styling/Student.css'
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 const theme = createTheme({
   palette: {
@@ -17,55 +18,60 @@ const theme = createTheme({
   },
 });
 
-const StudentRegistration = () => {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    phoneNumber: '',
-    grade: '',
+const validationSchema = Yup.object({
+  firstName: Yup.string().required('First Name is required'),
+  lastName: Yup.string().required('Last Name is required'),
+  email: Yup.string().email('Invalid email format').required('Email is required'),
+  password: Yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+  confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required('Confirm Password is required'),
+  phoneNumber: Yup.string().matches(/^[0-9]{10}$/, 'Phone Number must be 10 digits').required('Phone Number is required'),
+  grade: Yup.string().required('Grade is required'),
+});
+
+const Student = () => {
+  const formik = useFormik({
+    initialValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      phoneNumber: '',
+      grade: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      console.log('Student Registration:', values);
+      // Handle form submission logic here, e.g., send data to an API
+    },
   });
 
-  const gradeOptions = [
-    'Grade 9',
-    'Grade 10',
-    'Grade 11',
-    'Grade 12',
-  ];
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleStudentRegistration = (event) => {
-    event.preventDefault();
-    console.log('Student Registration:', formData);
-  };
+  const gradeOptions = ['Grade 9', 'Grade 10', 'Grade 11', 'Grade 12'];
 
   return (
     <ThemeProvider theme={theme}>
-      <Container maxWidth="sm" className="student-registration-container">
-        <Paper className="student-registration-paper">
+      <Container
+        maxWidth="sm"
+        style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '40px' }}
+      >
+        <Paper className="student-registration-paper" style={{ padding: '20px', width: '100%' }}>
           <Typography variant="h4" gutterBottom align="center" className="student-registration-title">
             Student Registration
           </Typography>
-          <form onSubmit={handleStudentRegistration} className="student-registration-form">
+          <form onSubmit={formik.handleSubmit} className="student-registration-form">
             <Grid container spacing={3} className="student-registration-grid">
               <Grid item xs={12} sm={6}>
                 <TextField
                   label="First Name"
                   variant="outlined"
                   name="firstName"
-                  value={formData.firstName}
-                  onChange={handleInputChange}
+                  value={formik.values.firstName}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   fullWidth
                   required
+                  error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+                  helperText={formik.touched.firstName && formik.errors.firstName}
                   className="student-registration-input"
                 />
               </Grid>
@@ -74,10 +80,13 @@ const StudentRegistration = () => {
                   label="Last Name"
                   variant="outlined"
                   name="lastName"
-                  value={formData.lastName}
-                  onChange={handleInputChange}
+                  value={formik.values.lastName}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   fullWidth
                   required
+                  error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+                  helperText={formik.touched.lastName && formik.errors.lastName}
                   className="student-registration-input"
                 />
               </Grid>
@@ -86,11 +95,13 @@ const StudentRegistration = () => {
                   label="Email"
                   variant="outlined"
                   name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   fullWidth
                   required
-                  type="email"
+                  error={formik.touched.email && Boolean(formik.errors.email)}
+                  helperText={formik.touched.email && formik.errors.email}
                   className="student-registration-input"
                 />
               </Grid>
@@ -100,10 +111,13 @@ const StudentRegistration = () => {
                   variant="outlined"
                   name="password"
                   type="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   fullWidth
                   required
+                  error={formik.touched.password && Boolean(formik.errors.password)}
+                  helperText={formik.touched.password && formik.errors.password}
                   className="student-registration-input"
                 />
               </Grid>
@@ -113,10 +127,13 @@ const StudentRegistration = () => {
                   variant="outlined"
                   name="confirmPassword"
                   type="password"
-                  value={formData.confirmPassword}
-                  onChange={handleInputChange}
+                  value={formik.values.confirmPassword}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   fullWidth
                   required
+                  error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
+                  helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
                   className="student-registration-input"
                 />
               </Grid>
@@ -125,21 +142,25 @@ const StudentRegistration = () => {
                   label="Phone Number"
                   variant="outlined"
                   name="phoneNumber"
-                  value={formData.phoneNumber}
-                  onChange={handleInputChange}
+                  value={formik.values.phoneNumber}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   fullWidth
                   required
+                  error={formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)}
+                  helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
                   className="student-registration-input"
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormControl fullWidth className="student-registration-input">
+                <FormControl fullWidth className="student-registration-input" error={formik.touched.grade && Boolean(formik.errors.grade)}>
                   <InputLabel id="grade-label">Grade</InputLabel>
                   <Select
                     labelId="grade-label"
                     name="grade"
-                    value={formData.grade}
-                    onChange={handleInputChange}
+                    value={formik.values.grade}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                     required
                   >
                     <MenuItem value="">Select a grade</MenuItem>
@@ -149,6 +170,11 @@ const StudentRegistration = () => {
                       </MenuItem>
                     ))}
                   </Select>
+                  {formik.touched.grade && formik.errors.grade && (
+                    <Typography variant="caption" color="error">
+                      {formik.errors.grade}
+                    </Typography>
+                  )}
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
@@ -164,4 +190,4 @@ const StudentRegistration = () => {
   );
 };
 
-export default StudentRegistration;
+export default Student;

@@ -1,17 +1,60 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Typography, List, ListItem, ListItemText, TextField, Button, ThemeProvider, createTheme, CssBaseline, GlobalStyles } from '@mui/material';
+import {
+  Container,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  TextField,
+  Button,
+  ThemeProvider,
+  createTheme,
+  CssBaseline,
+  Paper,
+  Box,
+  Grid,
+  Divider
+} from '@mui/material';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
-// Define the custom theme using createTheme
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#C6B2CE',
+      main: '#4A4A4A',
     },
     secondary: {
-      main: '#99C4E0',
+      main: '#D7DCE2',
     },
     background: {
-      default: '#E0D4D4',
+      default: '#F5F5F5',
+    },
+  },
+  typography: {
+    fontFamily: 'Roboto, sans-serif',
+    h4: {
+      fontWeight: 'bold',
+      marginBottom: '20px',
+    },
+    h5: {
+      fontWeight: 'bold',
+      marginBottom: '10px',
+    },
+    h6: {
+      fontWeight: 'bold',
+      marginBottom: '10px',
+    },
+    subtitle1: {
+      color: '#2D2D2D',
+    },
+    subtitle2: {
+      color: '#5A5A5A',
+    },
+    body1: {
+      color: '#7A7A7A',
+    },
+    body2: {
+      color: '#9A9A9A',
     },
   },
 });
@@ -19,70 +62,130 @@ const theme = createTheme({
 const Forum = () => {
   const [categories, setCategories] = useState([]);
   const [discussions, setDiscussions] = useState([]);
-  const [newPost, setNewPost] = useState('');
 
   useEffect(() => {
-    // Fetch forum categories and discussions
-    // Example:
     const fetchedCategories = ['General', 'Technical', 'Q&A'];
     const fetchedDiscussions = [
       { id: 1, category: 'General', topic: 'Welcome to the Forum', author: 'Admin', responses: 10 },
-      { id: 2, category: 'Technical', topic: 'React Hooks Query', author: 'UserA', responses: 5 },
-      // Other discussions...
+      { id: 2, category: 'Technical', topic: 'What is electricity?', author: 'UserA', responses: 5 },
     ];
     setCategories(fetchedCategories);
     setDiscussions(fetchedDiscussions);
   }, []);
 
-  const handlePostSubmit = () => {
-    // Handle posting a new question/topic
-    // Example:
-    console.log('Posting:', newPost);
-    // Clear the input field after posting
-    setNewPost('');
+  const initialValues = {
+    postTitle: '',
+    postContent: '',
+  };
+
+  const validationSchema = Yup.object().shape({
+    postTitle: Yup.string().required('Title is required'),
+    postContent: Yup.string().required('Content is required'),
+  });
+
+  const handlePostSubmit = (values, { resetForm }) => {
+    const postWithTimestamp = {
+      ...values,
+      timestamp: new Date().toISOString(),
+    };
+    console.log('Posting:', postWithTimestamp);
+    resetForm();
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline /> {/* Apply global styles from Material-UI */}
-      <GlobalStyles styles={{ // Apply global styles
-        body: {
-          backgroundColor: '#74451A' // Use theme's background color
-        },
-      }} />
-      <Container maxWidth="md" style={{ minHeight: '100vh' }}>
-        <Typography variant="h4" style={{ color: '#D9CCDD', marginBottom: '20px' }}>Welcome to the Forum</Typography>
-        
-        {/* Display Forum Categories */}
-        <List>
-          {categories.map((category, index) => (
-            <ListItem button key={index} onClick={() => console.log('Category:', category)}>
-              <ListItemText primary={<Typography variant="subtitle1" style={{ color: '#BACCD8' }}>{category}</Typography>} />
-            </ListItem>
-          ))}
-        </List>
-        
-        {/* Display Discussions */}
-        {discussions.map((discussion) => (
-          <div key={discussion.id} style={{ marginBottom: '20px' }}>
-            <Typography variant="h6" style={{ color: '#BFD5E4' }}>{discussion.topic}</Typography>
-            <Typography variant="subtitle2" style={{ color: '#D3DAE6' }}>Category: {discussion.category}</Typography>
-            <Typography variant="body2" style={{ color: '#333333' }}>Author: {discussion.author}</Typography>
-            <Typography variant="body2" style={{ color: '#333333' }}>Responses: {discussion.responses}</Typography>
-          </div>
-        ))}
-        
-        {/* Post Question/Topic Form */}
-        <TextField
-          label="Post a Question or Topic"
-          multiline
-          rows={4}
-          variant="outlined"
-          value={newPost}
-          onChange={(e) => setNewPost(e.target.value)}
-          style={{ backgroundColor: 'white', marginBottom: '16px', width: '100%' }}
-        />
-        <Button variant="contained" color="primary" onClick={handlePostSubmit}>Post</Button>
+      <CssBaseline />
+      <Container
+        maxWidth="md"
+        component={Paper}
+        elevation={3}
+        style={{
+          minHeight: '80vh',
+          padding: '40px',
+          marginTop: '80px',
+          backgroundColor: '#F5F5F5',
+        }}
+      >
+        <Typography variant="h4" style={{ color: '#4A4A4A', marginBottom: '20px' }}>
+          Welcome to the Forum
+        </Typography>
+
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="h5" style={{ color: '#4A4A4A', marginBottom: '10px' }}>
+              Categories
+            </Typography>
+            <List>
+              {categories.map((category, index) => (
+                <ListItem button key={index} onClick={() => console.log('Category:', category)}>
+                  <ListItemText primary={<Typography variant="subtitle1">{category}</Typography>} />
+                </ListItem>
+              ))}
+            </List>
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <Typography variant="h5" style={{ color: '#4A4A4A', marginBottom: '10px' }}>
+              Discussions
+            </Typography>
+            {discussions.map((discussion) => (
+              <Box key={discussion.id} style={{ marginBottom: '20px' }}>
+                <Typography variant="h6">{discussion.topic}</Typography>
+                <Typography variant="subtitle2">Category: {discussion.category}</Typography>
+                <Typography variant="body1">Author: {discussion.author}</Typography>
+                <Typography variant="body2">Responses: {discussion.responses}</Typography>
+                <Divider style={{ marginTop: '10px', marginBottom: '10px' }} />
+              </Box>
+            ))}
+          </Grid>
+        </Grid>
+
+        <Divider style={{ marginTop: '20px', marginBottom: '20px' }} />
+
+        <Typography variant="h5" style={{ color: '#4A4A4A', marginBottom: '20px' }}>
+          Create a Post
+        </Typography>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handlePostSubmit}
+        >
+          {({ values, handleChange, handleBlur, touched, errors }) => (
+            <Form>
+              <Field
+                as={TextField}
+                name="postTitle"
+                label="Post Title"
+                variant="outlined"
+                fullWidth
+                value={values.postTitle}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={!!errors.postTitle && touched.postTitle}
+                helperText={<ErrorMessage name="postTitle" />}
+                style={{ marginBottom: '20px' }}
+              />
+              <Field
+                as={TextField}
+                name="postContent"
+                label="Post Content"
+                multiline
+                rows={4}
+                variant="outlined"
+                fullWidth
+                value={values.postContent}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={!!errors.postContent && touched.postContent}
+                helperText={<ErrorMessage name="postContent" />}
+                style={{ marginBottom: '20px' }}
+              />
+              <Button type="submit" variant="contained" color="primary" style={{ marginTop: '10px' }}>
+                Post
+              </Button>
+            </Form>
+          )}
+        </Formik>
       </Container>
     </ThemeProvider>
   );

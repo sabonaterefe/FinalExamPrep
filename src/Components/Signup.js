@@ -12,13 +12,19 @@ const theme = createTheme({
 
 const Signup = () => {
   const handleRoleChange = (e) => {
-    const role = e.target.value;
-    if (role === 'subject-matter-expert') {
-      window.location.href = '/subject-matter-expert-registration';
-    } else if (role === 'student') {
-      window.location.href = '/student-registration';
-    } else if (role === 'admin') {
-      window.location.href = '/admin-registration';
+    const role = e.target.value.toLowerCase();
+    switch (role) {
+      case 'sme':
+        window.location.href = '/sme'; // Redirect to SME.js
+        break;
+      case 'student':
+        window.location.href = '/student'; // Redirect to Student.js
+        break;
+      case 'admin':
+        window.location.href = '/admin'; // Redirect to Admin.js
+        break;
+      default:
+        break;
     }
   };
 
@@ -30,7 +36,7 @@ const Signup = () => {
           justifyContent: 'center',
           alignItems: 'center',
           minHeight: '100vh',
-          background: 'linear-gradient(45deg, #9E4D5F 30%, #924F2B 90%)',
+          background: 'linear-gradient(45deg, #F8F4F5 30%, #E9E3E0 90%)',
         }}
       >
         <FormControl
@@ -39,22 +45,22 @@ const Signup = () => {
             textAlign: 'center',
             padding: '2rem',
             borderRadius: '8px',
-            background: '#BEA9A9',
+            background: '#EBE4E4',
             boxShadow: '0px 3px 15px rgba(0, 0, 0, 0.2)',
           }}
         >
           <Typography variant="h4" gutterBottom>
-          What defines you?
+            What defines you?
           </Typography>
           <FormControl style={{ marginTop: '2rem', width: '100%' }}>
-            <InputLabel id="role-label"></InputLabel>
+            <InputLabel id="role-label">Select Role</InputLabel>
             <Select
               labelId="role-label"
               id="role-select"
               onChange={handleRoleChange}
-              defaultValue="student"
+              defaultValue="Select role"
             >
-              <MenuItem value="subject-matter-expert">Subject Matter Expert</MenuItem>
+              <MenuItem value="sme">Subject Matter Expert</MenuItem>
               <MenuItem value="student">Student</MenuItem>
               <MenuItem value="admin">Admin</MenuItem>
             </Select>

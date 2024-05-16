@@ -47,9 +47,22 @@ const Admin = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline /> {/* Apply global styles */}
-      <Container maxWidth="sm">
-      default: '#B6A1A0',
-        <Paper style={{ minHeight: '100vh', padding: '20px', backgroundColor:'#BFC8CA' }}>
+      <Container
+        maxWidth="sm"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: '100vh',
+        }}
+      >
+        <Paper
+          style={{
+            padding: '20px',
+            backgroundColor: '#BFC8CA',
+            width: '100%',
+          }}
+        >
           <Typography variant="h5" gutterBottom align="center">
             Admin Registration
           </Typography>
